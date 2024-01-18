@@ -1,6 +1,7 @@
-import { type JSX, useState } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { rickAndMortyApi } from '@/api';
 import logo from '@/assets/icons/logo.png';
 import { Search } from '@/components/search';
 
@@ -15,6 +16,15 @@ const Wrapper = styled.div`
 
 const MainPage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      const response = await rickAndMortyApi.getCharacters();
+      console.log(response);
+    };
+
+    void fetchData();
+  }, []);
 
   return (
     <Wrapper>
