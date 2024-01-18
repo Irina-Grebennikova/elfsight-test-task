@@ -36,21 +36,4 @@ const StyledCard = styled.section<{ theme: ThemeDefault }>`
   }
 `;
 
-const StyledGender = styled.span<{ theme: ThemeDefault; color: keyof ThemeDefault['colors'] }>`
-  color: ${({ theme, color }): string => theme.colors[color]};
-  font-size: 28px;
-  font-weight: 900;
-`;
-
-const StyledStatus = styled.span<{ theme: ThemeDefault; color: keyof ThemeDefault['colors'] }>`
-  position: absolute;
-  top: 3%;
-  right: 3%;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background: ${({ theme, color }): string => theme.colors[color]};
-  color: ${({ theme }): string => theme.colors.white};
-  font-size: 1.3rem;
-`;
-
-export { StyledCard, StyledGender, StyledStatus };
+export { StyledCard };

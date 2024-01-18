@@ -11,6 +11,7 @@ import { Loader } from '../ui';
 type Props = {
   isLoading: boolean;
   characters: Character[];
+  selectCharacter: (character: Character) => void;
 };
 
 const StyledNoResults = styled.div<{ theme: ThemeDefault }>`
@@ -32,7 +33,7 @@ const StyledList = styled.div`
   max-width: 1500px;
 `;
 
-const CharacterList = ({ isLoading, characters }: Props): JSX.Element => {
+const CharacterList = ({ isLoading, characters, selectCharacter }: Props): JSX.Element => {
   if (isLoading) {
     return <Loader mt={'5%'} />;
   }
@@ -49,7 +50,7 @@ const CharacterList = ({ isLoading, characters }: Props): JSX.Element => {
   return (
     <StyledList>
       {characters.map((character: Character) => {
-        return <CharacterCard key={character.id} character={character} />;
+        return <CharacterCard key={character.id} character={character} selectCharacter={selectCharacter} />;
       })}
     </StyledList>
   );

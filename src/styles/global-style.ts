@@ -29,14 +29,6 @@ const GlobalStyle = createGlobalStyle`
     display: block;
   }
 
-  html {
-    font-size: 16px;
-  }
-
-  body {
-    font-size: 100%;
-  }
-
   html,
   body {
     height: 100%;
