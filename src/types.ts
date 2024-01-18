@@ -1,10 +1,10 @@
 type Character = {
   id: number;
   name: string;
-  status: string;
+  status: CharacterStatus;
   species: string;
   type: string;
-  gender: string;
+  gender: CharacterGender;
   origin: {
     name: string;
     url: string;
@@ -29,4 +29,18 @@ type CharacterResponse = {
   results: Character[];
 };
 
+enum CharacterGender {
+  female = 'Female',
+  male = 'Male',
+  genderless = 'Genderless',
+  unknown = 'unknown',
+}
+
+enum CharacterStatus {
+  alive = 'Alive',
+  dead = 'Dead',
+  unknown = 'unknown',
+}
+
 export type { Character, CharacterResponse };
+export { CharacterGender, CharacterStatus };

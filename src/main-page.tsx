@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 import { rickAndMortyApi } from '@/api';
 import logo from '@/assets/icons/logo.png';
+import { CharacterList } from '@/components/character-list';
 import { Search } from '@/components/search';
+import { Character } from '@/types';
 
 const Logo = styled.img`
   width: 250px;
@@ -16,13 +18,18 @@ const Wrapper = styled.div`
 
 const MainPage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [characters, setCharacters] = useState<Character[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      const response = await rickAndMortyApi.getCharacters();
-      console.log(response);
-    };
+      setIsLoading(() => true);
 
+      const response = await rickAndMortyApi.getCharacters();
+      setCharacters(response?.results ?? []);
+
+      setIsLoading(() => false);
+    };
     void fetchData();
   }, []);
 
@@ -30,6 +37,7 @@ const MainPage = (): JSX.Element => {
     <Wrapper>
       <Logo src={logo} alt="logo" />
       <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <CharacterList isLoading={isLoading} characters={characters} />
     </Wrapper>
   );
 };

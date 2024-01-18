@@ -1,5 +1,6 @@
+import isPropValid from '@emotion/is-prop-valid';
 import { type JSX, type PropsWithChildren } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { StyleSheetManager, ThemeProvider } from 'styled-components';
 
 import { GlobalStyle } from './global-style';
 
@@ -24,10 +25,17 @@ const theme = {
 
 const Theme = ({ children }: PropsWithChildren): JSX.Element => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      {children}
-    </ThemeProvider>
+    <StyleSheetManager
+      enableVendorPrefixes
+      shouldForwardProp={(propName, elementToBeRendered) => {
+        return typeof elementToBeRendered === 'string' ? isPropValid(propName) : true;
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        {children}
+      </ThemeProvider>
+    </StyleSheetManager>
   );
 };
 
