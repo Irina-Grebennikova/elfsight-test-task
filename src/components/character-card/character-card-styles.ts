@@ -4,6 +4,7 @@ import { ThemeDefault } from '@/styles';
 
 const StyledCard = styled.section<{ theme: ThemeDefault }>`
   position: relative;
+  max-width: 300px;
   border: 3px solid ${({ theme }): string => theme.colors.blue};
   border-radius: 10px;
   transition: 0.4s;
@@ -17,12 +18,13 @@ const StyledCard = styled.section<{ theme: ThemeDefault }>`
 
   .image {
     border-radius: 10px 10px 0 0;
-    max-width: 300px;
+    max-width: 100%;
     object-fit: cover;
   }
 
   .description {
     display: flex;
+    gap: 1%;
     align-items: center;
     justify-content: space-around;
     padding: clamp(5px, 1vw, 10px);
@@ -33,6 +35,8 @@ const StyledCard = styled.section<{ theme: ThemeDefault }>`
     font-weight: 700;
     font-family: ${({ theme }): string => theme.fonts.neucha};
     color: ${({ theme }): string => theme.colors.black};
+    overflow-wrap: break-word;
+    overflow: hidden;
   }
 `;
 

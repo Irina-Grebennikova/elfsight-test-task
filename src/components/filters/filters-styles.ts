@@ -14,10 +14,21 @@ const StyledFilters = styled.aside<{ theme: ThemeDefault; isOpen: boolean }>(({ 
     overflow: hidden;
     transition: 0.8s;
 
+    @media (max-width: 750px) {
+      position: fixed;
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    @media (max-width: 550px) {
+      min-width: ${isOpen ? '100%' : '0'};
+      width: ${isOpen ? '100%' : '0'};
+    }
+
     .content {
       position: relative;
       z-index: 1;
-      padding: 3% 5% 5%;
+      padding: 3% 5% 0;
       background-color: ${white};
       height: 100%;
     }
@@ -35,6 +46,7 @@ const StyledFilters = styled.aside<{ theme: ThemeDefault; isOpen: boolean }>(({ 
       padding: 2.5% 5%;
       border-radius: 10px;
       border: 2px solid ${blue};
+      font-family: ${theme.fonts.neucha};
       font-size: clamp(16px, 3vw, 18px);
 
       @media (max-width: 550px) {
@@ -48,6 +60,7 @@ const StyledFilters = styled.aside<{ theme: ThemeDefault; isOpen: boolean }>(({ 
       flex-direction: column;
       gap: 20px;
       margin-top: 5%;
+      padding-bottom: 5%;
     }
 
     .clear-btn {
@@ -88,6 +101,10 @@ const StyledFilters = styled.aside<{ theme: ThemeDefault; isOpen: boolean }>(({ 
           transform: translateX(${isOpen ? '3px' : '-3px'});
         }
       }
+
+      @media (max-width: 550px) {
+        opacity: ${isOpen ? '0' : '1'};
+      }
     }
 
     .closeIcon {
@@ -97,6 +114,17 @@ const StyledFilters = styled.aside<{ theme: ThemeDefault; isOpen: boolean }>(({ 
            margin-left: 5px;`
         : `border-right: 5px solid ${grey};
            margin-right: 5px;`};
+    }
+
+    .close-small-screens {
+      display: none;
+      position: absolute;
+      top: 3%;
+      right: 5%;
+
+      @media (max-width: 550px) {
+        display: block;
+      }
     }
   `;
 });

@@ -46,47 +46,19 @@ const StyledClearIcon = styled.div<{ theme: ThemeDefault }>`
   position: absolute;
   top: calc(50% - 12px);
   right: 15px;
-  width: 20px;
-  height: 20px;
-  opacity: 0.2;
-  cursor: pointer;
-  transition: 0.2s;
-
-  @media (hover: hover) {
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 10px;
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: ${({ theme }): string => theme.colors.black};
-  }
-
-  &::before {
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    transform: rotate(-45deg);
-  }
 
   @media (max-width: 550px) {
-    right: 10px;
-    width: 16px;
-    height: 16px;
-
-    &::before,
-    &::after {
-      content: '';
+    & > * {
+      right: 10px;
       width: 16px;
-      height: 1.5px;
+      height: 16px;
+
+      &::before,
+      &::after {
+        content: '';
+        width: 16px;
+        height: 1.5px;
+      }
     }
   }
 `;

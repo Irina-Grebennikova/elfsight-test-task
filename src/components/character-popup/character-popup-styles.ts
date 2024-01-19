@@ -13,7 +13,7 @@ const StyledMask = styled.div<{ isOpen: boolean }>(
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: 2;
     opacity: ${isOpen ? 1 : 0};
     pointer-events: ${isOpen ? 'all' : 'none'};
     transition: opacity 1s;
@@ -24,6 +24,7 @@ const StyledPopup = styled.article<{ theme: ThemeDefault }>(
   ({ theme: { colors, fonts } }) => css`
     position: relative;
     z-index: 2;
+    max-width: 300px;
     border: 3px solid ${colors.blue};
     border-radius: 10px;
     background-color: ${colors.white};
@@ -31,7 +32,7 @@ const StyledPopup = styled.article<{ theme: ThemeDefault }>(
 
     .image {
       border-radius: 10px 10px 0 0;
-      max-width: 300px;
+      max-width: 100%;
       height: 250px;
       object-fit: cover;
       object-position: 0% 0%;

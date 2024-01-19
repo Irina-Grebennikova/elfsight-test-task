@@ -8,7 +8,7 @@ const getGenderData = (gender: CharacterGender): { char: string; color: keyof Th
     case CharacterGender.female:
       return { char: '♀', color: 'pink' };
     case CharacterGender.genderless:
-      return { char: '—', color: 'black' };
+      return { char: '—', color: 'grey' };
     default:
       return { char: '?', color: 'grey' };
   }

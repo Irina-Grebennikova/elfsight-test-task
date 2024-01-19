@@ -1,7 +1,7 @@
 import { type JSX, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { StyledButton, StyledFilterName } from '@/styles';
+import { StyledButton, StyledCloseItem, StyledFilterName } from '@/styles';
 import { CharacterGender, CharacterStatus } from '@/types';
 
 import { FilterVariants } from '../filter-variants';
@@ -20,10 +20,12 @@ const CharacterSpecies = [
   'Cronenberg',
 ];
 
+const minWidth750 = window.matchMedia('(min-width: 750px)');
+
 const Filters = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(minWidth750.matches);
   const [type, setType] = useState(searchParams.get('type') ?? '');
 
   const toggleOpen = (): void => setIsOpen((isOpen) => !isOpen);
@@ -43,6 +45,10 @@ const Filters = (): JSX.Element => {
     <StyledFilters isOpen={isOpen}>
       <section className="content">
         <h3 className="title">Filters</h3>
+        <div className="close-small-screens" aria-label={'close filters'}>
+          <StyledCloseItem onClick={toggleOpen} size={'26px'} />
+        </div>
+
         <FilterVariants
           label="status"
           activeVariant={searchParams.get('status') ?? ''}
@@ -61,8 +67,15 @@ const Filters = (): JSX.Element => {
           variants={Object.values(CharacterSpecies)}
           setActiveVariant={setActiveVariant}
         />
+
         <StyledFilterName>Type</StyledFilterName>
-        <input className="type-input" value={type} onChange={(e) => setType(e.target.value)} />
+        <input
+          className="type-input"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          placeholder="Enter type..."
+        />
+
         <div className="buttons-wrapper">
           <StyledButton onClick={() => setActiveVariant('type', type)}>Apply type</StyledButton>
           <button aria-label="clear filters" onClick={clearFilters} className="clear-btn">
@@ -70,6 +83,7 @@ const Filters = (): JSX.Element => {
           </button>
         </div>
       </section>
+
       <button className="closeItem" onClick={toggleOpen}>
         <span className="closeIcon"></span>
       </button>

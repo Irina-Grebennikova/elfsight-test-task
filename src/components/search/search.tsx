@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import magnifier from '@/assets/icons/magnifier.svg';
-import { StyledButton } from '@/styles';
+import { StyledButton, StyledCloseItem } from '@/styles';
 
 import { StyledClearIcon, StyledInput, StyledInputBox, StyledSearchIcon, StyledWrapper } from './search-styles';
 
@@ -44,7 +44,9 @@ const Search = (): JSX.Element => {
             onChange={(e): void => setInputValue(e.target.value)}
             autoFocus
           />
-          <StyledClearIcon onClick={handleClearBtnClick} />
+          <StyledClearIcon onClick={handleClearBtnClick}>
+            <StyledCloseItem />
+          </StyledClearIcon>
         </StyledInputBox>
         <StyledButton>Search</StyledButton>
       </StyledWrapper>

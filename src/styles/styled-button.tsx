@@ -8,7 +8,7 @@ const StyledButton = styled.button<{ theme: ThemeDefault }>(({ theme }) => {
   return css`
     padding: clamp(5px, 1vw, 10px) clamp(10px, 3vw, 25px);
     font-size: clamp(16px, 4vw, 20px);
-    font-family: $neuchaFont;
+    font-family: ${theme.fonts.neucha};
     color: ${white};
     border-radius: 10px;
     border: 3px solid ${lightBlue};
