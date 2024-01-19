@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { FormEvent, useState } from 'react';
 
 import magnifier from '@/assets/icons/magnifier.svg';
 import { StyledButton } from '@/styles';
@@ -6,38 +6,38 @@ import { StyledButton } from '@/styles';
 import { StyledClearIcon, StyledInput, StyledInputBox, StyledSearchIcon, StyledWrapper } from './search-styles';
 
 type Props = {
-  searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setSearchQuery: (query: string) => void;
 };
 
-const Search = ({ searchQuery, setSearchQuery }: Props): JSX.Element => {
-  const input = createRef<HTMLInputElement>();
-
-  function updateSearchQuery(): string {
-    const newQuery = input.current!.value;
-    setSearchQuery(newQuery);
-    return newQuery;
-  }
+const Search = ({ setSearchQuery }: Props): JSX.Element => {
+  const [inputValue, setInputValue] = useState('');
 
   const handleClearBtnClick = (): void => {
     setSearchQuery('');
+    setInputValue('');
+  };
+
+  const handleSubmit = (e: FormEvent): void => {
+    e.preventDefault();
+    setSearchQuery(inputValue);
   };
 
   return (
-    <StyledWrapper>
-      <StyledInputBox>
-        <StyledSearchIcon src={magnifier} alt="Search" />
-        <StyledInput
-          placeholder="Search for characters..."
-          value={searchQuery}
-          onChange={updateSearchQuery}
-          ref={input}
-          autoFocus
-        />
-        <StyledClearIcon onClick={handleClearBtnClick} />
-      </StyledInputBox>
-      <StyledButton>Search</StyledButton>
-    </StyledWrapper>
+    <form onSubmit={handleSubmit}>
+      <StyledWrapper>
+        <StyledInputBox>
+          <StyledSearchIcon src={magnifier} alt="Search" />
+          <StyledInput
+            placeholder="Search for characters..."
+            value={inputValue}
+            onChange={(e): void => setInputValue(e.target.value)}
+            autoFocus
+          />
+          <StyledClearIcon onClick={handleClearBtnClick} />
+        </StyledInputBox>
+        <StyledButton>Search</StyledButton>
+      </StyledWrapper>
+    </form>
   );
 };
 

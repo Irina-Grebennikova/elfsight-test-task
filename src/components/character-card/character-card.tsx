@@ -1,7 +1,6 @@
 import { type JSX } from 'react';
 
 import { getGenderData, getStatusColor } from '@/helpers';
-import { useOutsideClick } from '@/hooks';
 import { StyledGender, StyledStatus } from '@/styles';
 import { type Character } from '@/types';
 
@@ -9,19 +8,12 @@ import { StyledCard } from './character-card-styles';
 
 type Props = {
   character: Character;
-  selectCharacter: (character: Character) => void;
+  showPopup: (character: Character) => void;
 };
 
-const CharacterCard = ({ character, selectCharacter }: Props): JSX.Element => {
+const CharacterCard = ({ character, showPopup }: Props): JSX.Element => {
   const { gender, status, name, image } = character;
   const genderData = getGenderData(gender);
-
-  const { setIsActive: setIsPopupOpen } = useOutsideClick(false);
-
-  const showPopup = (character: Character): void => {
-    selectCharacter(character);
-    setIsPopupOpen(true);
-  };
 
   return (
     <StyledCard onClick={() => showPopup(character)}>

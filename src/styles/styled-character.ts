@@ -9,7 +9,7 @@ type Props = {
 
 const StyledGender = styled.span<Props>`
   color: ${({ theme, color }): string => theme.colors[color]};
-  font-size: '2rem';
+  font-size: 2rem;
   font-weight: 900;
 `;
 

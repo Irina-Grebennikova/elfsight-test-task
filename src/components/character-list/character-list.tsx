@@ -8,12 +8,6 @@ import { Character } from '@/types';
 import { CharacterCard } from '../character-card';
 import { Loader } from '../ui';
 
-type Props = {
-  isLoading: boolean;
-  characters: Character[];
-  selectCharacter: (character: Character) => void;
-};
-
 const StyledNoResults = styled.div<{ theme: ThemeDefault }>`
   display: flex;
   gap: clamp(5px, 1vw, 10px);
@@ -33,7 +27,13 @@ const StyledList = styled.div`
   max-width: 1500px;
 `;
 
-const CharacterList = ({ isLoading, characters, selectCharacter }: Props): JSX.Element => {
+type Props = {
+  isLoading: boolean;
+  characters: Character[];
+  showPopup: (character: Character) => void;
+};
+
+const CharacterList = ({ isLoading, characters, showPopup }: Props): JSX.Element => {
   if (isLoading) {
     return <Loader mt={'5%'} />;
   }
@@ -50,7 +50,7 @@ const CharacterList = ({ isLoading, characters, selectCharacter }: Props): JSX.E
   return (
     <StyledList>
       {characters.map((character: Character) => {
-        return <CharacterCard key={character.id} character={character} selectCharacter={selectCharacter} />;
+        return <CharacterCard key={character.id} character={character} showPopup={showPopup} />;
       })}
     </StyledList>
   );

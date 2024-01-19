@@ -1,7 +1,6 @@
 import { type JSX } from 'react';
 
 import { getStatusColor } from '@/helpers';
-import { useOutsideClick } from '@/hooks';
 import { StyledStatus } from '@/styles';
 import { type Character } from '@/types';
 
@@ -9,11 +8,11 @@ import { StyledMask, StyledPopup } from './character-popup-styles';
 
 type Props = {
   character: Character | null;
+  isOpen: boolean;
+  close: () => void;
 };
 
-const CharacterPopup = ({ character }: Props): JSX.Element => {
-  const { ref, isActive } = useOutsideClick<HTMLDivElement>(false);
-
+const CharacterPopup = ({ character, isOpen, close }: Props): JSX.Element => {
   if (!character) {
     return (
       <StyledMask isOpen={false}>
@@ -36,20 +35,18 @@ const CharacterPopup = ({ character }: Props): JSX.Element => {
   ].filter((item) => item.value !== '');
 
   return (
-    <StyledMask isOpen={isActive}>
+    <StyledMask isOpen={isOpen}>
       <StyledPopup>
-        <div ref={ref}>
-          <img className="image" src={image} width={300} height={300} alt="" />
-          <StyledStatus color={statusColor}>{status}</StyledStatus>
-          <section className="description">
-            {InfoItems.map(({ label, value }) => (
-              <p className="info-line" key={label}>
-                {label}: <span className="value">{value}</span>
-              </p>
-            ))}
-          </section>
-        </div>
-        <button className="close-btn" aria-label="Close modal" />
+        <img className="image" src={image} width={300} height={300} alt="" />
+        <StyledStatus color={statusColor}>{status}</StyledStatus>
+        <section className="description">
+          {InfoItems.map(({ label, value }) => (
+            <p className="info-line" key={label}>
+              {label}: <span className="value">{value}</span>
+            </p>
+          ))}
+        </section>
+        <button className="close-btn" aria-label="Close modal" onClick={close} />
       </StyledPopup>
     </StyledMask>
   );

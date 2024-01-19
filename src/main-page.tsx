@@ -22,29 +22,32 @@ const MainPage = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       setIsLoading(() => true);
 
-      const response = await rickAndMortyApi.getCharacters();
+      const response = await rickAndMortyApi.getCharacters(searchQuery.trim());
       setCharacters(response?.results ?? []);
 
       setIsLoading(() => false);
     };
+
     void fetchData();
-  }, []);
+  }, [searchQuery]);
+
+  const showPopup = (character: Character): void => {
+    setSelectedCharacter(character);
+    setIsPopupOpen(true);
+  };
 
   return (
     <Wrapper>
       <Logo src={logo} alt="logo" />
-      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <CharacterList
-        isLoading={isLoading}
-        characters={characters}
-        selectCharacter={(character: Character) => setSelectedCharacter(character)}
-      />
-      <CharacterPopup character={selectedCharacter} />
+      <Search setSearchQuery={(query: string) => setSearchQuery(query)} />
+      <CharacterList isLoading={isLoading} characters={characters} showPopup={showPopup} />
+      <CharacterPopup character={selectedCharacter} isOpen={isPopupOpen} close={() => setIsPopupOpen(false)} />
     </Wrapper>
   );
 };
