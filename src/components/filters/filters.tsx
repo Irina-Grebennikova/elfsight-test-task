@@ -29,8 +29,14 @@ const Filters = (): JSX.Element => {
   const toggleOpen = (): void => setIsOpen((isOpen) => !isOpen);
 
   const setActiveVariant = (name: string, value: string): void => {
+    searchParams.set('page', '1');
     searchParams.set(name, value);
     setSearchParams(searchParams);
+  };
+
+  const clearFilters = (): void => {
+    setSearchParams({});
+    setType('');
   };
 
   return (
@@ -59,7 +65,7 @@ const Filters = (): JSX.Element => {
         <input className="type-input" value={type} onChange={(e) => setType(e.target.value)} />
         <div className="buttons-wrapper">
           <StyledButton onClick={() => setActiveVariant('type', type)}>Apply type</StyledButton>
-          <button aria-label="clear filters" onClick={() => setSearchParams({})} className="clear-btn">
+          <button aria-label="clear filters" onClick={clearFilters} className="clear-btn">
             Clear filters
           </button>
         </div>

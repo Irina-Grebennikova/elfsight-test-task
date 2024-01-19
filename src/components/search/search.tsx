@@ -28,6 +28,7 @@ const Search = (): JSX.Element => {
       removeNameParam();
       return;
     }
+    searchParams.set('page', '1');
     searchParams.set('name', inputValue.trim());
     setSearchParams(searchParams);
   };

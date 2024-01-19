@@ -8,6 +8,7 @@ import { CharacterList } from '@/components/character-list';
 import { CharacterPopup } from '@/components/character-popup';
 import { Filters } from '@/components/filters';
 import { Search } from '@/components/search';
+import { Pagination } from '@/components/ui/pagination';
 import { Character } from '@/types';
 
 const Wrapper = styled.div`
@@ -26,21 +27,26 @@ const Main = styled.main`
   }
 `;
 
+const ITEMS_PER_PAGE = 20;
+
 const MainPage = (): JSX.Element => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(true);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       setIsLoading(() => true);
 
       const response = await rickAndMortyApi.getCharacters(searchParams.toString());
-      setCharacters(response?.results ?? []);
+      const totalCount = response?.info?.count || 0;
 
+      setCharacters(response?.results ?? []);
+      setPageCount(Math.ceil(totalCount / ITEMS_PER_PAGE));
       setIsLoading(() => false);
     };
 
@@ -52,12 +58,20 @@ const MainPage = (): JSX.Element => {
     setIsPopupOpen(true);
   };
 
+  const setPage = (page: number): void => {
+    searchParams.set('page', String(page));
+    setSearchParams(searchParams);
+  };
+
   return (
     <Wrapper>
       <Main>
         <img src={logo} alt="logo" className="logo" />
         <Search />
         <CharacterList isLoading={isLoading} characters={characters} showPopup={showPopup} />
+        {!isLoading && characters.length > 0 && (
+          <Pagination currentPage={Number(searchParams.get('page') ?? 1)} pageCount={pageCount} setPage={setPage} />
+        )}
         <CharacterPopup character={selectedCharacter} isOpen={isPopupOpen} close={() => setIsPopupOpen(false)} />
       </Main>
       <Filters />
