@@ -52,8 +52,10 @@ const StyledClearIcon = styled.div<{ theme: ThemeDefault }>`
   cursor: pointer;
   transition: 0.2s;
 
-  &:hover {
-    opacity: 1;
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1;
+    }
   }
 
   &::before,

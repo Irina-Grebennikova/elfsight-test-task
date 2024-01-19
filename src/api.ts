@@ -3,9 +3,11 @@ import { Character, CharacterResponse } from './types';
 const BASE_URL = 'https://rickandmortyapi.com/api';
 
 const rickAndMortyApi = {
-  async getCharacters(name = '', page = 1): Promise<CharacterResponse | null> {
+  async getCharacters(query = '', page = 1): Promise<CharacterResponse | null> {
+    query = query ? `&${query}` : '';
+
     try {
-      const response = await fetch(`${BASE_URL}/character/?name=${name}&page=${page}`);
+      const response = await fetch(`${BASE_URL}/character/?page=${page}${query}`);
       return (await response.json()) as CharacterResponse;
     } catch (error) {
       console.error(error);

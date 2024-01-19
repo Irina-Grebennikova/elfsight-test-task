@@ -1,25 +1,35 @@
 import { FormEvent, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import magnifier from '@/assets/icons/magnifier.svg';
 import { StyledButton } from '@/styles';
 
 import { StyledClearIcon, StyledInput, StyledInputBox, StyledSearchIcon, StyledWrapper } from './search-styles';
 
-type Props = {
-  setSearchQuery: (query: string) => void;
-};
-
-const Search = ({ setSearchQuery }: Props): JSX.Element => {
+const Search = (): JSX.Element => {
   const [inputValue, setInputValue] = useState('');
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const removeNameParam = (): void => {
+    searchParams.delete('name');
+    setSearchParams(searchParams);
+  };
+
   const handleClearBtnClick = (): void => {
-    setSearchQuery('');
     setInputValue('');
+    removeNameParam();
   };
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    setSearchQuery(inputValue);
+
+    if (inputValue.trim() === '') {
+      removeNameParam();
+      return;
+    }
+    searchParams.set('name', inputValue.trim());
+    setSearchParams(searchParams);
   };
 
   return (

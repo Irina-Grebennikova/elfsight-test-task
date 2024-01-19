@@ -16,14 +16,16 @@ const StyledButton = styled.button<{ theme: ThemeDefault }>(({ theme }) => {
     background-color: ${blue};
     transform: 0.2s;
 
-    &:hover {
-      background-color: ${lightBlue};
-      color: ${blue};
-    }
-
     &:active {
       border-color: ${blue};
       box-shadow: inset 0 0 5px 0px ${blue};
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: ${lightBlue};
+        color: ${blue};
+      }
     }
   `;
 });
